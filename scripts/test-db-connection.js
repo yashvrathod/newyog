@@ -1,9 +1,23 @@
 #!/usr/bin/env node
 
-// Quick test to verify database connection and data
-const { PrismaClient } = require('@prisma/client')
+// Load environment variables
+require('dotenv/config');
 
-const prisma = new PrismaClient()
+// Quick test to verify database connection and data
+const { PrismaClient } = require('@prisma/client');
+const { PrismaNeon } = require('@prisma/adapter-neon');
+const { Pool } = require('@neondatabase/serverless');
+
+// Create Neon connection pool
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+
+// Create Neon adapter for Prisma
+const adapter = new PrismaNeon(pool);
+
+const prisma = new PrismaClient({
+  adapter,
+  log: ['error']
+});
 
 async function testConnection() {
   console.log('🔍 Testing database connection...\n')

@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "20");
 
     const where: any = {
-      isActive: true
+      isActive: true,
     };
 
     if (featured === "true") {
@@ -19,24 +19,21 @@ export async function GET(request: NextRequest) {
 
     if (search) {
       where.OR = [
-        { companyName: { contains: search, mode: 'insensitive' } },
-        { contactName: { contains: search, mode: 'insensitive' } },
-        { email: { contains: search, mode: 'insensitive' } },
-        { industry: { contains: search, mode: 'insensitive' } }
+        { companyName: { contains: search, mode: "insensitive" } },
+        { contactName: { contains: search, mode: "insensitive" } },
+        { email: { contains: search, mode: "insensitive" } },
+        { industry: { contains: search, mode: "insensitive" } },
       ];
     }
 
     const [clients, total] = await Promise.all([
       prisma.client.findMany({
         where,
-        orderBy: [
-          { isFeatured: 'desc' },
-          { createdAt: 'desc' }
-        ],
+        orderBy: [{ isFeatured: "desc" }, { createdAt: "desc" }],
         skip: (page - 1) * limit,
-        take: limit
+        take: limit,
       }),
-      prisma.client.count({ where })
+      prisma.client.count({ where }),
     ]);
 
     return NextResponse.json({
@@ -45,8 +42,8 @@ export async function GET(request: NextRequest) {
         page,
         limit,
         total,
-        totalPages: Math.ceil(total / limit)
-      }
+        totalPages: Math.ceil(total / limit),
+      },
     });
   } catch (error) {
     console.error("Error fetching clients:", error);
@@ -81,7 +78,7 @@ export async function POST(request: NextRequest) {
 
     // Check if client with email already exists
     const existingClient = await prisma.client.findUnique({
-      where: { email: email.toLowerCase() }
+      where: { email: email.toLowerCase() },
     });
 
     if (existingClient) {
@@ -102,8 +99,8 @@ export async function POST(request: NextRequest) {
         industry,
         notes,
         isFeatured: isFeatured ?? false,
-        isActive: true
-      }
+        isActive: true,
+      },
     });
 
     return NextResponse.json({ data: client }, { status: 201 });
