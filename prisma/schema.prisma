@@ -1,0 +1,491 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Management
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      Role     @default(USER)
+  isActive  Boolean  @default(true)
+  avatar    String?
+  lastLogin DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // CMS Relations
+  createdPages       Page[]      @relation("PageCreator")
+  updatedPages       Page[]      @relation("PageUpdater")
+  createdPosts       Post[]      @relation("PostCreator")
+  updatedPosts       Post[]      @relation("PostUpdater")
+  createdMedia       Media[]     @relation("MediaCreator")
+  sessions           Session[]
+  
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("sessions")
+}
+
+// CMS Content Management
+model Page {
+  id          String      @id @default(cuid())
+  title       String
+  slug        String      @unique
+  content     Json?       // Rich content blocks
+  excerpt     String?
+  metaTitle   String?
+  metaDescription String?
+  status      PageStatus  @default(DRAFT)
+  isPublished Boolean     @default(false)
+  publishedAt DateTime?
+  template    String?     // Template name for rendering
+  parentId    String?
+  sortOrder   Int         @default(0)
+  
+  // SEO & Settings
+  featuredImage String?
+  settings    Json?       // Page-specific settings
+  
+  // Timestamps & Relations
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String
+  updatedById String?
+  
+  creator User  @relation("PageCreator", fields: [createdById], references: [id])
+  updater User? @relation("PageUpdater", fields: [updatedById], references: [id])
+  parent  Page? @relation("PageHierarchy", fields: [parentId], references: [id])
+  children Page[] @relation("PageHierarchy")
+  
+  @@map("pages")
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  content     Json?      // Rich content blocks
+  excerpt     String?
+  metaTitle   String?
+  metaDescription String?
+  status      PostStatus @default(DRAFT)
+  isPublished Boolean    @default(false)
+  publishedAt DateTime?
+  
+  // Content Organization
+  categoryId  String?
+  tags        String[]   @default([])
+  featuredImage String?
+  
+  // SEO & Settings
+  settings    Json?
+  
+  // Timestamps & Relations
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String
+  updatedById String?
+  
+  creator  User      @relation("PostCreator", fields: [createdById], references: [id])
+  updater  User?     @relation("PostUpdater", fields: [updatedById], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id])
+  
+  @@map("posts")
+}
+
+model Category {
+  id          String @id @default(cuid())
+  name        String
+  slug        String @unique
+  description String?
+  image       String?
+  parentId    String?
+  sortOrder   Int    @default(0)
+  isActive    Boolean @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryHierarchy")
+  posts    Post[]
+  products Product[]
+  services Service[]
+  
+  @@map("categories")
+}
+
+// Media Management
+model Media {
+  id          String    @id @default(cuid())
+  filename    String
+  originalName String
+  mimeType    String
+  size        Int
+  url         String
+  alt         String?
+  caption     String?
+  description String?
+  folder      String?   // Organization folder
+  tags        String[]  @default([])
+  
+  // Metadata
+  width       Int?
+  height      Int?
+  metadata    Json?     // Additional metadata
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String
+  
+  creator User @relation("MediaCreator", fields: [createdById], references: [id])
+  
+  @@map("media")
+}
+
+// Business Models (Enhanced)
+model Product {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  description     String?
+  shortDescription String?
+  content         Json?    // Rich content for detailed descriptions
+  
+  // Pricing
+  price           Decimal? @db.Decimal(10, 2)
+  cost            Decimal? @db.Decimal(10, 2)
+  discount        Decimal? @db.Decimal(5, 2)
+  showPrice       Boolean  @default(true)
+  
+  // Organization
+  categoryId      String?
+  sku             String?  @unique
+  tags            String[] @default([])
+  
+  // Media
+  featuredImage   String?
+  gallery         String[] @default([])
+  
+  // Technical
+  specifications  Json?    // Structured specifications
+  features        String[] @default([])
+  downloads       Json?    // Product downloads/documents
+  
+  // Status
+  status          ProductStatus @default(DRAFT)
+  isActive        Boolean  @default(true)
+  isFeatured      Boolean  @default(false)
+  stockStatus     StockStatus @default(IN_STOCK)
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  category  Category?  @relation(fields: [categoryId], references: [id])
+  inquiries Inquiry[]
+  
+  @@map("products")
+}
+
+model Service {
+  id              String @id @default(cuid())
+  name            String
+  slug            String @unique
+  description     String?
+  shortDescription String?
+  content         Json?  // Rich content
+  
+  // Organization
+  categoryId      String?
+  tags            String[] @default([])
+  
+  // Media
+  icon            String?
+  featuredImage   String?
+  gallery         String[] @default([])
+  
+  // Service Details
+  features        String[] @default([])
+  priceRange      String?
+  duration        String?  // Service duration
+  
+  // Status
+  status          ServiceStatus @default(DRAFT)
+  isActive        Boolean @default(true)
+  isFeatured      Boolean @default(false)
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  category  Category? @relation(fields: [categoryId], references: [id])
+  inquiries Inquiry[]
+  
+  @@map("services")
+}
+
+model Client {
+  id          String @id @default(cuid())
+  companyName String
+  contactName String?
+  email       String?
+  phone       String?
+  address     String?
+  website     String?
+  
+  // Media
+  logo        String?
+  
+  // Business Info
+  industry    String?
+  size        CompanySize?
+  notes       String?
+  
+  // CMS Features
+  permissions Json?    // Client portal permissions
+  documents   Json?    // Client documents/files
+  
+  // Status
+  isActive    Boolean @default(true)
+  isFeatured  Boolean @default(false)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("clients")
+}
+
+model Testimonial {
+  id          String @id @default(cuid())
+  content     String
+  rating      Int    @default(5) @db.SmallInt
+  
+  // Author Info
+  authorName    String
+  authorTitle   String?
+  authorCompany String?
+  authorImage   String?
+  authorEmail   String?
+  
+  // Status
+  isActive    Boolean @default(true)
+  isFeatured  Boolean @default(false)
+  isVerified  Boolean @default(false)
+  
+  // Metadata
+  source      String? // Where testimonial came from
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("testimonials")
+}
+
+model Inquiry {
+  id        String      @id @default(cuid())
+  type      InquiryType @default(GENERAL)
+  
+  // Contact Info
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  
+  // Content
+  subject   String?
+  message   String
+  
+  // Relations
+  productId String?
+  serviceId String?
+  
+  // Status & Management
+  status    InquiryStatus @default(NEW)
+  priority  Priority      @default(MEDIUM)
+  notes     String?
+  
+  // Assignment
+  assignedTo String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  product Product? @relation(fields: [productId], references: [id])
+  service Service? @relation(fields: [serviceId], references: [id])
+  
+  @@map("inquiries")
+}
+
+// Settings & Configuration
+model Setting {
+  id        String      @id @default(cuid())
+  key       String      @unique
+  value     String?
+  type      SettingType @default(STRING)
+  category  String      @default("general")
+  description String?
+  isPublic  Boolean     @default(false) // Whether setting is exposed to frontend
+  
+  updatedAt DateTime @updatedAt
+  
+  @@map("settings")
+}
+
+model Menu {
+  id        String @id @default(cuid())
+  name      String
+  slug      String @unique
+  location  String // header, footer, sidebar, etc.
+  items     Json   // Menu structure
+  isActive  Boolean @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("menus")
+}
+
+// CMS Blocks for flexible content
+model Block {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  type      BlockType
+  content   Json      // Block content/configuration
+  settings  Json?     // Block-specific settings
+  isGlobal  Boolean   @default(false) // Can be used across multiple pages
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("blocks")
+}
+
+// Enums
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+  AUTHOR
+  USER
+}
+
+enum PageStatus {
+  DRAFT
+  PUBLISHED
+  PRIVATE
+  ARCHIVED
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  PRIVATE
+  SCHEDULED
+  ARCHIVED
+}
+
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ServiceStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum StockStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  LOW_STOCK
+  DISCONTINUED
+}
+
+enum InquiryType {
+  GENERAL
+  PRODUCT
+  SERVICE
+  SUPPORT
+  PARTNERSHIP
+  SALES
+}
+
+enum InquiryStatus {
+  NEW
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+  SPAM
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum CompanySize {
+  STARTUP
+  SMALL
+  MEDIUM
+  LARGE
+  ENTERPRISE
+}
+
+enum SettingType {
+  STRING
+  NUMBER
+  BOOLEAN
+  JSON
+  TEXT
+  EMAIL
+  URL
+  COLOR
+  IMAGE
+}
+
+enum BlockType {
+  HERO
+  TEXT
+  IMAGE
+  GALLERY
+  TESTIMONIALS
+  SERVICES
+  PRODUCTS
+  CLIENTS
+  CONTACT_FORM
+  FAQ
+  CUSTOM
+}
