@@ -14,15 +14,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Find user in database
+    // Find user by unique field only
     const user = await prisma.user.findUnique({
       where: {
         email: email.toLowerCase(),
-        isActive: true,
       },
     });
 
-    if (!user) {
+    // Check existence + isActive here
+    if (!user || !user.isActive) {
       return NextResponse.json(
         { error: "Invalid credentials" },
         { status: 401 }
@@ -41,7 +41,6 @@ export async function POST(request: NextRequest) {
     // Create session
     const sessionToken = await createSession(user.id);
 
-    // Return user data (excluding password)
     const { password: _, ...userWithoutPassword } = user;
 
     const response = NextResponse.json({
@@ -49,12 +48,12 @@ export async function POST(request: NextRequest) {
       sessionToken,
     });
 
-    // Set session cookie
+    // Set cookie
     response.cookies.set("session_token", sessionToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       path: "/",
     });
 
