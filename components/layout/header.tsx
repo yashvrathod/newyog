@@ -21,7 +21,7 @@ const navigation = [
   { name: "Products", href: "/products" },
   { name: "Services", href: "/services" },
   { name: "Gallery", href: "/gallery" },
-  { name: "Contact", href: "/contact" },
+  // { name: "Contact", href: "/contact" },
 ];
 
 export function Header() {
@@ -127,10 +127,10 @@ export function Header() {
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <Image 
-                  src="/logo.jpeg" 
-                  alt="Yog Computers Logo" 
-                  width={32} 
+                <Image
+                  src="/logo.jpeg"
+                  alt="Yog Computers Logo"
+                  width={32}
                   height={32}
                   className="w-6 h-6 sm:w-8 sm:h-8 object-contain rounded-lg"
                   priority
@@ -321,7 +321,9 @@ export function Header() {
                     whileHover={{ x: "100%" }}
                     transition={{ duration: 0.5 }}
                   />
-                  <span className="relative z-10 text-sm xl:text-base">Work with us</span>
+                  <span className="relative z-10 text-sm xl:text-base">
+                    Work with us
+                  </span>
                   <motion.div
                     animate={{ x: [0, 3, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
