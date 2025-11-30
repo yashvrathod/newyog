@@ -43,9 +43,14 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
     <motion.header
-      className="fixed top-6 left-0 right-0 z-50 flex justify-center"
+      className="fixed top-2 sm:top-6 left-0 right-0 z-50 flex justify-center px-4 sm:px-0"
       style={{ y: headerY, opacity: headerOpacity }}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -54,10 +59,10 @@ export function Header() {
       {/* Glassmorphism Navigation */}
       <motion.nav
         className={cn(
-          "relative overflow-hidden",
+          "relative overflow-hidden w-full max-w-7xl",
           "bg-white/80 dark:bg-black/80 backdrop-blur-xl",
           "border border-white/20 dark:border-white/10",
-          "rounded-full px-8 lg:px-12 py-3",
+          "rounded-2xl sm:rounded-full px-4 sm:px-8 lg:px-12 py-3",
           "shadow-2xl shadow-primary/10",
           "transition-all duration-500",
           isScrolled
@@ -69,7 +74,7 @@ export function Header() {
       >
         {/* Animated Background Gradient */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-primary/5 via-blue-500/5 to-purple-500/5 rounded-full"
+          className="absolute inset-0 bg-gradient-to-r from-primary/5 via-blue-500/5 to-purple-500/5 rounded-2xl sm:rounded-full"
           animate={{
             background: [
               "linear-gradient(90deg, rgba(59,130,246,0.05) 0%, rgba(59,130,246,0.03) 50%, rgba(139,92,246,0.05) 100%)",
@@ -81,7 +86,7 @@ export function Header() {
         />
 
         {/* Floating Particles */}
-        <div className="absolute inset-0 overflow-hidden rounded-full">
+        <div className="absolute inset-0 overflow-hidden rounded-2xl sm:rounded-full">
           {[...Array(3)].map((_, i) => (
             <motion.div
               key={i}
@@ -103,16 +108,16 @@ export function Header() {
             />
           ))}
         </div>
-        <div className="flex h-14 items-center justify-between gap-8 relative z-10">
+        <div className="flex h-14 items-center justify-between gap-4 sm:gap-8 relative z-10">
           {/* Animated Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
             <motion.div
               className="relative"
               whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
               transition={{ duration: 0.5 }}
             >
               <motion.div
-                className="w-10 h-10 rounded-xl bg-white dark:bg-gray-800 flex items-center justify-center shadow-lg border border-white/10"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white dark:bg-gray-800 flex items-center justify-center shadow-lg border border-white/10"
                 animate={{
                   boxShadow: [
                     "0 0 0 0 rgba(59, 130, 246, 0)",
@@ -122,20 +127,19 @@ export function Header() {
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                {/* <Zap className="w-5 h-5 text-white" /> */}
                 <Image 
                   src="/logo.jpeg" 
                   alt="Yog Computers Logo" 
-                  width={36} 
-                  height={36}
-                  className="w-9 h-9 object-contain rounded-lg"
+                  width={32} 
+                  height={32}
+                  className="w-6 h-6 sm:w-8 sm:h-8 object-contain rounded-lg"
                   priority
                 />
               </motion.div>
             </motion.div>
 
             <motion.div
-              className="text-xl font-bold tracking-tight"
+              className="text-lg sm:text-xl font-bold tracking-tight"
               whileHover={{
                 backgroundImage:
                   "linear-gradient(90deg, #3b82f6, #8b5cf6, #3b82f6)",
@@ -155,14 +159,15 @@ export function Header() {
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
-              className="dark:text-white"
+              className="dark:text-white hidden xs:block"
             >
-              Yog Computers
+              <span className="sm:hidden">Yog</span>
+              <span className="hidden sm:inline">Yog Computers</span>
             </motion.div>
           </Link>
 
           {/* Spectacular Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1">
             {navigation.map((item, index) => {
               const isActive = pathname === item.href;
               return (
@@ -177,7 +182,7 @@ export function Header() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 group",
+                      "relative px-3 xl:px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 group",
                       isActive
                         ? "text-primary"
                         : "text-gray-600 dark:text-gray-300 hover:text-primary"
@@ -251,7 +256,7 @@ export function Header() {
           </div>
 
           {/* Animated Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {mounted && (
               <motion.div
                 whileHover={{ scale: 1.1 }}
@@ -262,7 +267,7 @@ export function Header() {
                   variant="ghost"
                   size="icon"
                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="rounded-full relative overflow-hidden group"
+                  className="rounded-full relative overflow-hidden group w-9 h-9 sm:w-10 sm:h-10"
                 >
                   <motion.div
                     className="absolute inset-0 bg-primary/10 rounded-full"
@@ -280,7 +285,7 @@ export function Header() {
                         exit={{ y: 30, opacity: 0, rotate: 90 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <Sun className="h-5 w-5 relative z-10" />
+                        <Sun className="h-4 w-4 sm:h-5 sm:w-5 relative z-10" />
                       </motion.div>
                     ) : (
                       <motion.div
@@ -290,7 +295,7 @@ export function Header() {
                         exit={{ y: 30, opacity: 0, rotate: 90 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <Moon className="h-5 w-5 relative z-10" />
+                        <Moon className="h-4 w-4 sm:h-5 sm:w-5 relative z-10" />
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -300,14 +305,14 @@ export function Header() {
 
             {/* Spectacular CTA Button */}
             <motion.div
-              className="hidden md:block"
+              className="hidden lg:block"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
               <Button
                 asChild
-                className="rounded-full relative overflow-hidden group bg-gradient-to-r from-primary to-blue-500 hover:from-blue-500 hover:to-purple-600 transition-all duration-300"
+                className="rounded-full relative overflow-hidden group bg-gradient-to-r from-primary to-blue-500 hover:from-blue-500 hover:to-purple-600 transition-all duration-300 px-4 xl:px-6"
               >
                 <Link href="/contact" className="flex items-center gap-2">
                   <motion.div
@@ -316,12 +321,12 @@ export function Header() {
                     whileHover={{ x: "100%" }}
                     transition={{ duration: 0.5 }}
                   />
-                  <span className="relative z-10">Work with us</span>
+                  <span className="relative z-10 text-sm xl:text-base">Work with us</span>
                   <motion.div
                     animate={{ x: [0, 3, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
-                    <Sparkles className="w-4 h-4 relative z-10" />
+                    <Sparkles className="w-3 h-3 xl:w-4 xl:h-4 relative z-10" />
                   </motion.div>
                 </Link>
               </Button>
@@ -329,7 +334,7 @@ export function Header() {
 
             {/* Animated Mobile Menu Button */}
             <motion.div
-              className="md:hidden"
+              className="lg:hidden"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               transition={{ duration: 0.2 }}
@@ -337,7 +342,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full relative overflow-hidden"
+                className="rounded-full relative overflow-hidden w-9 h-9 sm:w-10 sm:h-10"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
                 <motion.div
@@ -356,7 +361,7 @@ export function Header() {
                       exit={{ rotate: 90, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <X className="h-6 w-6 relative z-10" />
+                      <X className="h-5 w-5 sm:h-6 sm:w-6 relative z-10" />
                     </motion.div>
                   ) : (
                     <motion.div
@@ -366,7 +371,7 @@ export function Header() {
                       exit={{ rotate: -90, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <Menu className="h-6 w-6 relative z-10" />
+                      <Menu className="h-5 w-5 sm:h-6 sm:w-6 relative z-10" />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -383,7 +388,7 @@ export function Header() {
               animate={{ opacity: 1, height: "auto", y: 0, scale: 1 }}
               exit={{ opacity: 0, height: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="md:hidden mt-4 bg-white/90 dark:bg-black/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 dark:border-white/10 px-6 py-6 space-y-1 relative overflow-hidden"
+              className="lg:hidden mt-4 bg-white/90 dark:bg-black/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 dark:border-white/10 px-4 sm:px-6 py-4 sm:py-6 space-y-1 relative overflow-hidden"
             >
               {/* Mobile Menu Background */}
               <motion.div
@@ -407,7 +412,7 @@ export function Header() {
                     <Link
                       href={item.href}
                       className={cn(
-                        "flex items-center gap-3 py-3 px-4 rounded-xl transition-all duration-300 group relative overflow-hidden",
+                        "flex items-center gap-3 py-3 px-3 sm:px-4 rounded-xl transition-all duration-300 group relative overflow-hidden",
                         isActive
                           ? "bg-primary/10 text-primary"
                           : "text-gray-600 dark:text-gray-300 hover:bg-primary/5 hover:text-primary"
@@ -428,7 +433,7 @@ export function Header() {
                         transition={{ duration: 0.3 }}
                       />
 
-                      <span className="font-medium relative z-10">
+                      <span className="font-medium relative z-10 text-sm sm:text-base">
                         {item.name}
                       </span>
 
@@ -452,11 +457,11 @@ export function Header() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navigation.length * 0.1, duration: 0.3 }}
-                className="pt-4 relative z-10"
+                className="pt-3 sm:pt-4 relative z-10"
               >
                 <Button
                   asChild
-                  className="w-full rounded-xl bg-gradient-to-r from-primary to-blue-500 hover:from-blue-500 hover:to-purple-600 transition-all duration-300 relative overflow-hidden group"
+                  className="w-full rounded-xl bg-gradient-to-r from-primary to-blue-500 hover:from-blue-500 hover:to-purple-600 transition-all duration-300 relative overflow-hidden group h-11 sm:h-12"
                 >
                   <Link
                     href="/contact"
@@ -468,7 +473,7 @@ export function Header() {
                       whileHover={{ x: "100%" }}
                       transition={{ duration: 0.5 }}
                     />
-                    <span className="relative z-10 flex items-center justify-center gap-2">
+                    <span className="relative z-10 flex items-center justify-center gap-2 text-sm sm:text-base">
                       Work with us
                       <Sparkles className="w-4 h-4" />
                     </span>

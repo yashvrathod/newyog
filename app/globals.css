@@ -1,5 +1,72 @@
 @import "tailwindcss";
 
+/* Extra small breakpoint for very small devices */
+@media (min-width: 475px) {
+  .xs\:block {
+    display: block;
+  }
+}
+
+/* Ensure proper spacing on mobile */
+@media (max-width: 640px) {
+  .mobile-header-fix {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .mobile-nav-container {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+}
+
+/* Prevent horizontal scroll on very small screens */
+@media (max-width: 320px) {
+  .ultra-mobile-fix {
+    font-size: 0.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+/* Improve touch targets on mobile */
+@media (pointer: coarse) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Fix for Safari iOS viewport units */
+@supports (-webkit-touch-callout: none) {
+  .mobile-menu-height {
+    max-height: -webkit-fill-available;
+  }
+}
+
+/* Backdrop blur fallback for older browsers */
+@supports not (backdrop-filter: blur(12px)) {
+  .fallback-blur {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+  
+  .dark .fallback-blur {
+    background-color: rgba(0, 0, 0, 0.95);
+  }
+}
+
+/* Smooth transitions for mobile menu */
+.mobile-menu-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Better focus states for accessibility */
+.focus-ring:focus-visible {
+  outline: 2px solid theme(colors.primary.500);
+  outline-offset: 2px;
+  border-radius: theme(borderRadius.full);
+}
+
 /* Smooth Scroll Behavior */
 html {
   scroll-behavior: smooth;
