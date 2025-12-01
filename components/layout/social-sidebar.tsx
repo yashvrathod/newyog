@@ -1,15 +1,31 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { Instagram, Facebook, Linkedin, MessageCircle } from "lucide-react"
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Instagram, Facebook, Linkedin, MessageCircle } from "lucide-react";
 
 const socialLinks = [
-  { name: "Instagram", href: "#", icon: Instagram },
-  { name: "LinkedIn", href: "#", icon: Linkedin },
-  { name: "Facebook", href: "#", icon: Facebook },
-  { name: "WhatsApp", href: "#", icon: MessageCircle },
-]
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/yogcomputers",
+    icon: Instagram,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/company/yogcomputers",
+    icon: Linkedin,
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/yogcomputers",
+    icon: Facebook,
+  },
+  {
+    name: "WhatsApp",
+    href: "https://wa.me/9850850331",
+    icon: MessageCircle,
+  },
+];
 
 export function SocialSidebar() {
   return (
@@ -36,5 +52,5 @@ export function SocialSidebar() {
         </motion.div>
       ))}
     </motion.div>
-  )
+  );
 }
