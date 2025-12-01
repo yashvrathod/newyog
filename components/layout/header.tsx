@@ -161,7 +161,7 @@ export function Header() {
               }}
               className="dark:text-white hidden xs:block"
             >
-              <span className="sm:hidden">Yog</span>
+              <span className="sm:hidden">Yog Computers</span>
               <span className="hidden sm:inline">Yog Computers</span>
             </motion.div>
           </Link>
