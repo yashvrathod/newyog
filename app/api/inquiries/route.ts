@@ -2,26 +2,10 @@ import { type NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 import type {
-  Inquiry,
   InquiryStatus,
   InquiryType,
   Priority,
 } from "@/lib/types";
-
-interface Inquiry {
-  id: string;
-  type: string;
-  name: string;
-  email: string;
-  phone?: string;
-  company?: string;
-  subject?: string;
-  message: string;
-  service_id?: string;
-  product_id?: string;
-  status: string;
-  created_at: string;
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -140,12 +124,12 @@ export async function POST(request: NextRequest) {
         type: type as InquiryType,
         name,
         email: email.toLowerCase(),
-        phone,
-        company,
-        subject,
+        phone: phone || null,
+        company: company || null,
+        subject: subject || null,
         message,
-        serviceId,
-        productId,
+        serviceId: serviceId || null,
+        productId: productId || null,
         priority: priority as Priority,
         status: "NEW",
       },

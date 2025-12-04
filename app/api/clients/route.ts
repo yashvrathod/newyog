@@ -63,8 +63,11 @@ export async function POST(request: NextRequest) {
       email,
       phone,
       address,
-      logoUrl,
+      website,
+      logo,
+      logoUrl, // Support both fields for backward compatibility
       industry,
+      size,
       notes,
       isFeatured,
     } = body;
@@ -76,28 +79,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if client with email already exists
-    const existingClient = await prisma.client.findUnique({
-      where: { email: email.toLowerCase() },
-    });
+    // Check if client with email already exists (only if email is provided)
+    if (email) {
+      const existingClient = await prisma.client.findFirst({
+        where: { email: email.toLowerCase() },
+      });
 
-    if (existingClient) {
-      return NextResponse.json(
-        { error: "Client with this email already exists" },
-        { status: 400 }
-      );
+      if (existingClient) {
+        return NextResponse.json(
+          { error: "Client with this email already exists" },
+          { status: 400 }
+        );
+      }
     }
 
     const client = await prisma.client.create({
       data: {
         companyName,
-        contactName,
-        email: email.toLowerCase(),
-        phone,
-        address,
-        logoUrl,
-        industry,
-        notes,
+        contactName: contactName || null,
+        email: email ? email.toLowerCase() : null,
+        phone: phone || null,
+        address: address || null,
+        website: website || null,
+        logo: logo || logoUrl || null, // Support both field names
+        industry: industry || null,
+        size: size || null,
+        notes: notes || null,
         isFeatured: isFeatured ?? false,
         isActive: true,
       },

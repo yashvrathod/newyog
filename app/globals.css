@@ -388,6 +388,24 @@ html {
   }
 }
 
+@keyframes scroll-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+  }
+}
+
 .animate-fade-up {
   animation: fade-up 0.8s ease-out forwards;
 }
@@ -406,6 +424,25 @@ html {
 
 .animate-scroll {
   animation: scroll 30s linear infinite;
+}
+
+.animate-scroll-reverse {
+  animation: scroll-reverse 30s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Pause animation on hover */
+.animation-paused {
+  animation-play-state: paused;
+}
+
+/* Grid pattern background */
+.bg-grid-pattern {
+  background-image: radial-gradient(circle, rgba(0,0,0,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
 /* Glassmorphism utilities */

@@ -5,6 +5,7 @@ import { ScrollToTop } from "@/components/ui/scroll-to-top"
 import { HeroSection } from "@/components/home/hero-section"
 import { StatsSection } from "@/components/home/stats-section"
 import { AboutPreview } from "@/components/home/about-preview"
+import { ClientsSection } from "@/components/home/clients-section"
 import { FeaturedProductsSection } from "@/components/home/featured-products-section"
 import { FeaturesSection } from "@/components/home/features-section"
 import { ShowcaseSection } from "@/components/home/showcase-section"
@@ -21,6 +22,7 @@ export default function HomePage() {
         <HeroSection />
         <StatsSection />
         <AboutPreview />
+        <ClientsSection />
         <FeaturedProductsSection />
         <FeaturesSection />
         <ShowcaseSection />

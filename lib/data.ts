@@ -102,6 +102,8 @@ const API_BASE = process.env.NODE_ENV === 'development' ? 'http://localhost:3000
 async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<ApiResponse<T>> {
   const url = `${API_BASE}/api${endpoint}`
   
+  console.log('🌐 Making API request to:', url)
+  
   try {
     const response = await fetch(url, {
       headers: {
@@ -112,15 +114,19 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<Api
       ...options,
     })
 
+    console.log('🌐 API Response status:', response.status, response.statusText)
+
     if (!response.ok) {
       console.warn(`API responded with ${response.status} for ${endpoint}`)
       return { data: undefined, error: `HTTP ${response.status}` }
     }
 
     const data = await response.json()
+    console.log('🌐 API Response parsed data:', data)
     return data
   } catch (error) {
     console.warn(`API fetch failed for ${endpoint}:`, error instanceof Error ? error.message : 'Unknown error')
+    console.error('🌐 Full error:', error)
     return { data: undefined, error: error instanceof Error ? error.message : 'Network error' }
   }
 }
@@ -227,13 +233,27 @@ export async function getFeaturedServices(): Promise<Service[]> {
   return getServices({ featured: true })
 }
 
-// Clients
+// Clients with intelligent fallback
 export async function getClients(featured?: boolean): Promise<Client[]> {
+  console.log('🔄 Fetching clients with params:', { featured })
+  
   const searchParams = new URLSearchParams()
   if (featured) searchParams.append('featured', 'true')
 
   const response = await fetchApi<Client[]>(`/clients?${searchParams}`)
-  return response.data || []
+  
+  console.log('📡 API Response full object:', response)
+  console.log('📡 API Response data:', response.data)
+  console.log('📡 API Response error:', response.error)
+  
+  if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+    console.log('✅ API returned clients:', response.data.length)
+    return response.data
+  }
+  
+  console.log('⚠️ API failed or empty, returning empty array for database integration')
+  console.log('⚠️ Reason: data exists:', !!response.data, 'is array:', Array.isArray(response.data), 'length:', response.data?.length)
+  return []
 }
 
 export async function getFeaturedClients(): Promise<Client[]> {

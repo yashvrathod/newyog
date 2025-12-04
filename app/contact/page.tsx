@@ -57,6 +57,17 @@ const contactTypes = [
   },
 ];
 
+// Map contact form types to valid inquiry types
+const getInquiryType = (contactType: string): string => {
+  const typeMap: { [key: string]: string } = {
+    customer: "GENERAL",
+    vendor: "PARTNERSHIP", 
+    distributor: "PARTNERSHIP",
+    corporate: "SALES"
+  };
+  return typeMap[contactType] || "GENERAL";
+};
+
 export default function ContactPage() {
   const [selectedType, setSelectedType] = useState("customer");
   const [formData, setFormData] = useState({
@@ -71,11 +82,41 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log("Contact form submitted:", { type: selectedType, ...formData });
-    setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-    setIsSubmitting(false);
+    
+    try {
+      const response = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: getInquiryType(selectedType),
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || undefined,
+          company: formData.company || undefined,
+          subject: `Contact Form - ${contactTypes.find(t => t.id === selectedType)?.label} Inquiry`,
+          message: formData.message,
+          priority: "MEDIUM"
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Show success message
+        alert("Thank you for your message! We'll get back to you soon.");
+        setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+        setSelectedType("customer");
+      } else {
+        throw new Error(result.error || "Failed to send message");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Sorry, there was an error sending your message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
