@@ -87,3 +87,8 @@ export type Menu = Prisma.MenuModel
  * 
  */
 export type Block = Prisma.BlockModel
+/**
+ * Model Section
+ * 
+ */
+export type Section = Prisma.SectionModel

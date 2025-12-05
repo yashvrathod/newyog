@@ -144,3 +144,12 @@ export const BlockType = {
 } as const
 
 export type BlockType = (typeof BlockType)[keyof typeof BlockType]
+
+
+export const SectionType = {
+  PRODUCTS: 'PRODUCTS',
+  SERVICES: 'SERVICES',
+  GALLERY: 'GALLERY'
+} as const
+
+export type SectionType = (typeof SectionType)[keyof typeof SectionType]

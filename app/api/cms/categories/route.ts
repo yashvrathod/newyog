@@ -13,11 +13,12 @@ export async function GET(request: NextRequest) {
       isActive: true
     }
 
-    if (parentId) {
+    if (parentId && parentId !== "all") {
       where.parentId = parentId
-    } else if (parentId !== "all") {
+    } else if (parentId !== "all" && !parentId) {
       where.parentId = null // Root categories only
     }
+    // If parentId === "all", don't filter by parentId (show all categories)
 
     const categories = await prisma.category.findMany({
       where,

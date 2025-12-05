@@ -535,6 +535,23 @@ export type EnumBlockTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumBlockTypeFilter<$PrismaModel>
 }
 
+export type EnumSectionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SectionType | Prisma.EnumSectionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SectionType[] | Prisma.ListEnumSectionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SectionType[] | Prisma.ListEnumSectionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSectionTypeFilter<$PrismaModel> | $Enums.SectionType
+}
+
+export type EnumSectionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SectionType | Prisma.EnumSectionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SectionType[] | Prisma.ListEnumSectionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SectionType[] | Prisma.ListEnumSectionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSectionTypeWithAggregatesFilter<$PrismaModel> | $Enums.SectionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSectionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSectionTypeFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1013,6 +1030,23 @@ export type NestedEnumBlockTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumBlockTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumBlockTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumSectionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SectionType | Prisma.EnumSectionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SectionType[] | Prisma.ListEnumSectionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SectionType[] | Prisma.ListEnumSectionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSectionTypeFilter<$PrismaModel> | $Enums.SectionType
+}
+
+export type NestedEnumSectionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SectionType | Prisma.EnumSectionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SectionType[] | Prisma.ListEnumSectionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SectionType[] | Prisma.ListEnumSectionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSectionTypeWithAggregatesFilter<$PrismaModel> | $Enums.SectionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSectionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSectionTypeFilter<$PrismaModel>
 }
 
 

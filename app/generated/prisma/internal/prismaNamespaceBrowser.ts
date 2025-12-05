@@ -64,7 +64,8 @@ export const ModelName = {
   Inquiry: 'Inquiry',
   Setting: 'Setting',
   Menu: 'Menu',
-  Block: 'Block'
+  Block: 'Block',
+  Section: 'Section'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -363,6 +364,23 @@ export const BlockScalarFieldEnum = {
 } as const
 
 export type BlockScalarFieldEnum = (typeof BlockScalarFieldEnum)[keyof typeof BlockScalarFieldEnum]
+
+
+export const SectionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  type: 'type',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  settings: 'settings',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById'
+} as const
+
+export type SectionScalarFieldEnum = (typeof SectionScalarFieldEnum)[keyof typeof SectionScalarFieldEnum]
 
 
 export const SortOrder = {

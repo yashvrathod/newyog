@@ -6,11 +6,24 @@ import { createSession } from "@/lib/auth";
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
+    console.log('🔐 Login attempt:', email);
 
     if (!email || !password) {
       return NextResponse.json(
         { error: "Email and password are required" },
         { status: 400 }
+      );
+    }
+
+    // Test database connection first
+    try {
+      await prisma.$connect();
+      console.log('✅ Database connected for login');
+    } catch (dbError) {
+      console.error('❌ Database connection failed:', dbError);
+      return NextResponse.json(
+        { error: "Database connection failed" },
+        { status: 500 }
       );
     }
 
@@ -20,6 +33,8 @@ export async function POST(request: NextRequest) {
         email: email.toLowerCase(),
       },
     });
+
+    console.log('👤 User found:', user ? `${user.email} (${user.role})` : 'None');
 
     // Check existence + isActive here
     if (!user || !user.isActive) {
@@ -59,7 +74,22 @@ export async function POST(request: NextRequest) {
 
     return response;
   } catch (error) {
-    console.error("Login error:", error);
-    return NextResponse.json({ error: "Login failed" }, { status: 500 });
+    console.error("❌ Login error details:", error);
+    if (error instanceof Error) {
+      console.error("Error message:", error.message);
+      console.error("Error stack:", error.stack);
+    }
+    
+    // Provide more specific error messages
+    let errorMessage = "Login failed";
+    if (error instanceof Error) {
+      if (error.message.includes("database") || error.message.includes("connection")) {
+        errorMessage = "Database connection error";
+      } else if (error.message.includes("user") || error.message.includes("email")) {
+        errorMessage = "User lookup failed";
+      }
+    }
+    
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

@@ -26,10 +26,12 @@ import {
   CreditCard,
   Building2,
   Inbox,
+  Layers3,
 } from "lucide-react"
 
 const sidebarItems = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { name: "Categories", href: "/admin/categories", icon: Layers3 },
   { name: "Products", href: "/admin/products", icon: Package },
   { name: "Services", href: "/admin/services", icon: Briefcase },
   { name: "Clients", href: "/admin/clients", icon: Building2 },

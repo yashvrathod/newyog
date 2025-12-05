@@ -33,6 +33,7 @@ model User {
   createdPosts       Post[]      @relation("PostCreator")
   updatedPosts       Post[]      @relation("PostUpdater")
   createdMedia       Media[]     @relation("MediaCreator")
+  createdSections    Section[]   @relation("SectionCreator")
   sessions           Session[]
   
   @@map("users")
@@ -392,6 +393,26 @@ model Block {
   @@map("blocks")
 }
 
+// Dynamic Sections for Products, Services, Gallery
+model Section {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique
+  description String?
+  type        SectionType
+  isActive    Boolean     @default(true)
+  sortOrder   Int         @default(0)
+  settings    Json?       // Section-specific settings
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String
+
+  creator User @relation("SectionCreator", fields: [createdById], references: [id])
+
+  @@map("sections")
+}
+
 // Enums
 enum Role {
   SUPER_ADMIN
@@ -492,4 +513,10 @@ enum BlockType {
   CONTACT_FORM
   FAQ
   CUSTOM
+}
+
+enum SectionType {
+  PRODUCTS
+  SERVICES
+  GALLERY
 }

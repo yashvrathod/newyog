@@ -14,6 +14,7 @@ export type {
   Setting,
   Menu,
   Block,
+  Section,
   Role,
   PageStatus,
   PostStatus,
@@ -26,6 +27,7 @@ export type {
   CompanySize,
   SettingType,
   BlockType,
+  SectionType,
 } from '@prisma/client'
 
 // Extended types for API responses

@@ -20,104 +20,7 @@ const categories = [
   { id: "office", name: "Office" },
 ];
 
-const galleryData: GalleryImage[] = [
-  {
-    id: "1",
-    title: "Annual Conference 2024",
-    description: "Our biggest event of the year",
-    url: "/placeholder.svg?key=s5v9o",
-    category: "events",
-    createdAt: new Date(),
-  },
-  {
-    id: "2",
-    title: "Product Launch Event",
-    description: "Introducing our latest innovations",
-    url: "/placeholder.svg?key=hqc32",
-    category: "events",
-    createdAt: new Date(),
-  },
-  {
-    id: "3",
-    title: "Enterprise Server Setup",
-    description: "State-of-the-art server room",
-    url: "/placeholder.svg?key=a0aev",
-    category: "products",
-    createdAt: new Date(),
-  },
-  {
-    id: "4",
-    title: "Industrial Automation",
-    description: "Smart factory solutions",
-    url: "/placeholder.svg?key=nv2gv",
-    category: "products",
-    createdAt: new Date(),
-  },
-  {
-    id: "5",
-    title: "Client Workshop",
-    description: "Hands-on training session",
-    url: "/placeholder.svg?key=i2spi",
-    category: "services",
-    createdAt: new Date(),
-  },
-  {
-    id: "6",
-    title: "Strategy Meeting",
-    description: "Planning for success",
-    url: "/placeholder.svg?key=p3njz",
-    category: "services",
-    createdAt: new Date(),
-  },
-  {
-    id: "7",
-    title: "Company Headquarters",
-    description: "Our modern workspace",
-    url: "/placeholder.svg?key=6z1r9",
-    category: "office",
-    createdAt: new Date(),
-  },
-  {
-    id: "8",
-    title: "Open Office Space",
-    description: "Collaborative work environment",
-    url: "/placeholder.svg?key=97fjy",
-    category: "office",
-    createdAt: new Date(),
-  },
-  {
-    id: "9",
-    title: "Team Building Day",
-    description: "Fun and collaboration",
-    url: "/placeholder.svg?key=u91sy",
-    category: "events",
-    createdAt: new Date(),
-  },
-  {
-    id: "10",
-    title: "Smart Office Hub",
-    description: "Connected workplace",
-    url: "/placeholder.svg?key=7dmj7",
-    category: "products",
-    createdAt: new Date(),
-  },
-  {
-    id: "11",
-    title: "Consulting Session",
-    description: "Expert guidance",
-    url: "/placeholder.svg?key=h3dds",
-    category: "services",
-    createdAt: new Date(),
-  },
-  {
-    id: "12",
-    title: "Rooftop Lounge",
-    description: "Relaxation space",
-    url: "/placeholder.svg?key=fflmr",
-    category: "office",
-    createdAt: new Date(),
-  },
-];
+// Gallery data now comes from the API
 
 export default function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -134,24 +37,38 @@ export default function GalleryPage() {
   async function loadImages() {
     try {
       setLoading(true);
+      setError(null);
+      
       const params = new URLSearchParams();
       if (selectedCategory && selectedCategory !== "all") {
         params.append("category", selectedCategory);
       }
 
-      const response = await fetch(`/api/gallery?${params}`);
+      const response = await fetch(`/api/gallery?${params}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const result = await response.json();
 
-      if (response.ok) {
+      if (result.success) {
         setImages(result.data || []);
         setError(null);
       } else {
         setError(result.error || "Failed to load gallery");
         setImages([]);
+        console.error('Gallery API Error:', result.details || result.error);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load gallery");
+      const errorMessage = err instanceof Error ? err.message : "Failed to load gallery";
+      setError(errorMessage);
       setImages([]);
+      console.error('Gallery Load Error:', err);
     } finally {
       setLoading(false);
     }
@@ -175,7 +92,7 @@ export default function GalleryPage() {
     }
   };
 
-  const openLightbox = (image: GalleryImage) => {
+  const openLightbox = (image: Media) => {
     setSelectedImage(image);
     setLightboxOpen(true);
   };
@@ -270,13 +187,15 @@ export default function GalleryPage() {
                         className="relative group cursor-pointer overflow-hidden rounded-xl"
                         onClick={() => openLightbox(image)}
                       >
-                        <Image
-                          src={image.url || "/placeholder.svg"}
-                          alt={image.alt || image.filename}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
+                        <div className="relative w-full" style={{ aspectRatio: '1' }}>
+                          <Image
+                            src={image.url || "/placeholder.svg"}
+                            alt={image.alt || image.filename}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                        </div>
                         <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-300" />
                         <div className="absolute inset-0 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <div>
@@ -339,7 +258,7 @@ export default function GalleryPage() {
               <div className="relative">
                 <Image
                   src={selectedImage.url || "/placeholder.svg"}
-                  alt={selectedImage.title}
+                  alt={selectedImage.alt || selectedImage.filename}
                   width={800}
                   height={600}
                   className="w-full max-h-[80vh] object-contain rounded-xl"
@@ -347,7 +266,7 @@ export default function GalleryPage() {
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-foreground/80 to-transparent rounded-b-xl">
                   <h3 className="text-background font-semibold text-xl">
-                    {selectedImage.title}
+                    {selectedImage.caption || selectedImage.filename}
                   </h3>
                   {selectedImage.description && (
                     <p className="text-background/80 text-sm mt-1">

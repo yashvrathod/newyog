@@ -1,12 +1,9 @@
-import { PrismaClient } from "@prisma/client";
-import { PrismaNeon } from "@prisma/adapter-neon";
-import { Pool } from "@neondatabase/serverless";
+import { PrismaClient } from "@/app/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg"; // Make sure this is installed
 
-// Create Neon connection pool
-const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
-
-// Create Neon adapter for Prisma
-const adapter = new PrismaNeon(pool);
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!, // your DB URL
+});
 
 const prismaClientSingleton = () => {
   return new PrismaClient({
