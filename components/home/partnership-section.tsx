@@ -43,44 +43,44 @@ interface Program {
 
 const partnerships: Partnership[] = [
   {
-    id: "microsoft",
+    id: "dell",
     type: "Technology",
-    partner: "Microsoft",
-    description: "Premier Azure partner delivering enterprise cloud solutions with advanced AI and data analytics capabilities.",
-    benefits: ["Azure credits", "Technical support", "Co-marketing opportunities", "Early access to new features"],
-    tier: "Premier",
-    established: "2020",
-    projects: 150
+    partner: "Dell Technologies",
+    description: "Authorized Dell partner providing enterprise computers, servers, and hardware solutions to businesses across Pune.",
+    benefits: ["Wholesale pricing", "Technical support", "Training programs", "Extended warranties"],
+    tier: "Gold",
+    established: "2015",
+    projects: 45
   },
   {
-    id: "aws",
+    id: "hp",
     type: "Technology", 
-    partner: "Amazon Web Services",
-    description: "Advanced AWS consulting partner specializing in serverless architecture and machine learning implementations.",
-    benefits: ["AWS credits", "Dedicated support", "Training resources", "Solution architect access"],
-    tier: "Elite",
-    established: "2019",
-    projects: 200
+    partner: "HP Inc.",
+    description: "Certified HP partner specializing in business laptops, printers, and enterprise computing solutions.",
+    benefits: ["Partner discounts", "Priority support", "Training resources", "Marketing support"],
+    tier: "Silver",
+    established: "2012",
+    projects: 38
   },
   {
-    id: "salesforce",
-    type: "Integration",
-    partner: "Salesforce",
-    description: "Certified Salesforce partner providing CRM customization and integration solutions.",
-    benefits: ["Platform access", "Certification support", "Lead sharing", "Technical guidance"],
+    id: "hikvision",
+    type: "Strategic",
+    partner: "Hikvision India",
+    description: "Authorized security partner providing CCTV cameras, surveillance systems, and security solutions.",
+    benefits: ["Product training", "Technical support", "Competitive pricing", "Installation guidance"],
     tier: "Gold",
-    established: "2021",
-    projects: 75
+    established: "2018",
+    projects: 62
   },
   {
-    id: "google",
+    id: "lenovo",
     type: "Technology",
-    partner: "Google Cloud",
-    description: "Google Cloud partner focused on data analytics, AI/ML, and modern application development.",
-    benefits: ["GCP credits", "Technical training", "Co-sell opportunities", "Product roadmap access"],
-    tier: "Gold",
-    established: "2022",
-    projects: 90
+    partner: "Lenovo India",
+    description: "Lenovo business partner offering ThinkPad laptops, desktops, and enterprise computing solutions.",
+    benefits: ["Business pricing", "Extended support", "Training access", "Marketing materials"],
+    tier: "Silver",
+    established: "2016",
+    projects: 28
   }
 ];
 
@@ -143,10 +143,10 @@ const programs: Program[] = [
 ];
 
 const partnershipStats = [
-  { label: "Active Partners", value: "150+", icon: <Handshake className="h-5 w-5" /> },
-  { label: "Joint Projects", value: "500+", icon: <Globe2 className="h-5 w-5" /> },
-  { label: "Partner Revenue", value: "$50M+", icon: <TrendingUp className="h-5 w-5" /> },
-  { label: "Success Rate", value: "96%", icon: <Award className="h-5 w-5" /> }
+  { label: "Technology Partners", value: "12+", icon: <Handshake className="h-5 w-5" /> },
+  { label: "Partner Projects", value: "175+", icon: <Globe2 className="h-5 w-5" /> },
+  { label: "Partnership Value", value: "₹50L+", icon: <TrendingUp className="h-5 w-5" /> },
+  { label: "Success Rate", value: "98%", icon: <Award className="h-5 w-5" /> }
 ];
 
 export function PartnershipSection() {

@@ -146,7 +146,7 @@ export function HeroSection() {
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.15] text-white"
         >
           Your <span className="font-serif italic text-primary">trusted</span>{" "}
-          technology <span className="text-white/90">partner</span> in Pune
+          technology <span className="text-white/90">partner</span>
         </motion.h1>
 
         <motion.p
@@ -159,10 +159,10 @@ export function HeroSection() {
           }}
           className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mt-8"
         >
-          From computer sales and repairs to security cameras and electrical
-          services, we provide personalized solutions that keep your technology
-          running smoothly. Trust Yog Computers for fast, reliable, and
-          long-term tech support.
+          From enterprise IT solutions and computer sales to security camera
+          installations and electrical services, we provide comprehensive
+          technology solutions for businesses and individuals. Trust Yog
+          Computers for reliable, scalable, and long-term tech partnerships.
         </motion.p>
 
         {/* Key Metrics - Smooth and Simple */}
@@ -173,10 +173,10 @@ export function HeroSection() {
           className="flex flex-wrap items-center justify-center gap-8 mt-12 mb-8"
         >
           {[
-            { number: "1000+", label: "Happy Customers" },
-            { number: "99%", label: "Customer Satisfaction" },
-            { number: "20+", label: "Years Experience" },
-            { number: "24/7", label: "Support Available" },
+            { number: "1000+", label: "Enterprise Clients" },
+            { number: "99%", label: "Client Satisfaction" },
+            { number: "16+", label: "Years Excellence" },
+            { number: "24/7", label: "Business Support" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}

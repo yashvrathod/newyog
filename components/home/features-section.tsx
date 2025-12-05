@@ -9,21 +9,21 @@ import { cn } from "@/lib/utils";
 const features = [
   {
     number: "1",
-    title: "Computer Solutions",
+    title: "Enterprise IT Solutions",
     description:
-      "Sales, repairs, and maintenance of laptops, desktops, and accessories. Expert hardware troubleshooting and upgrades.",
+      "Complete computer sales, repairs, and maintenance for businesses. Expert hardware troubleshooting, network setup, and enterprise-grade upgrades.",
   },
   {
     number: "2",
     title: "Security Systems",
     description:
-      "Professional CCTV camera installation, configuration, and monitoring for homes, offices, and businesses.",
+      "Professional CCTV camera installation, configuration, and monitoring for enterprises, offices, and residential properties.",
   },
   {
     number: "3",
     title: "Electrical Services",
     description:
-      "Complete electrical solutions including wiring, installations, repairs, and safety inspections for all properties.",
+      "Comprehensive electrical solutions including enterprise wiring, installations, repairs, and safety inspections for commercial and residential properties.",
   },
 ];
 
@@ -52,7 +52,7 @@ export function FeaturesSection() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-muted-foreground max-w-2xl mx-auto mt-4"
         >
-          Comprehensive technology solutions for all your computing, security, and electrical needs in Pune.
+          Enterprise-grade technology solutions for businesses and individuals. From IT infrastructure to security systems in Pune.
         </motion.p>
       </div>
 

@@ -19,39 +19,39 @@ interface Stat {
 const stats: Stat[] = [
   {
     id: "clients",
-    label: "Active Clients",
-    value: 500,
+    label: "Enterprise Clients",
+    value: 1000,
     suffix: "+",
     icon: <Users className="h-8 w-8" />,
-    description: "Businesses worldwide trust our solutions",
-    trend: "+12% this quarter"
+    description: "Businesses across Pune trust our solutions",
+    trend: "+15% this quarter"
   },
   {
     id: "success",
     label: "Success Rate",
-    value: 98.5,
+    value: 99,
     suffix: "%",
     icon: <TrendingUp className="h-8 w-8" />,
     description: "Project completion with client satisfaction",
-    trend: "Above industry average"
+    trend: "Industry leading"
   },
   {
     id: "experience",
-    label: "Years Experience",
-    value: 20,
+    label: "Years Excellence",
+    value: 16,
     suffix: "+",
     icon: <Clock className="h-8 w-8" />,
-    description: "Decades of industry expertise and innovation",
-    trend: "Since 2003"
+    description: "Proven expertise in technology solutions",
+    trend: "Since 2008"
   },
   {
-    id: "awards",
-    label: "Industry Awards",
-    value: 25,
-    suffix: "",
+    id: "installations",
+    label: "CCTV Installations",
+    value: 500,
+    suffix: "+",
     icon: <Award className="h-8 w-8" />,
-    description: "Recognition for excellence and innovation",
-    trend: "3 awards this year"
+    description: "Security systems deployed successfully",
+    trend: "Growing rapidly"
   }
 ];
 
@@ -64,22 +64,39 @@ function AnimatedCounter({ value, suffix, duration = 2000 }: { value: number; su
   useEffect(() => {
     if (isInView && !hasAnimated) {
       setHasAnimated(true);
-      const increment = value / (duration / 16);
+      
+      // Simplified animation with better error handling
+      const steps = 60; // Total animation steps
+      const increment = value / steps;
       let current = 0;
+      let step = 0;
 
       const timer = setInterval(() => {
-        current += increment;
-        if (current >= value) {
+        step++;
+        current = Math.min(increment * step, value);
+        
+        if (step >= steps || current >= value) {
           setCount(value);
           clearInterval(timer);
         } else {
           setCount(Math.floor(current));
         }
-      }, 16);
+      }, duration / steps);
 
       return () => clearInterval(timer);
     }
   }, [isInView, value, duration, hasAnimated]);
+
+  // Fallback: Show final value if animation hasn't started after 3 seconds
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      if (count === 0 && value > 0) {
+        setCount(value);
+      }
+    }, 3000);
+
+    return () => clearTimeout(fallbackTimer);
+  }, [count, value]);
 
   return (
     <span ref={ref} className="text-4xl md:text-5xl font-bold">
@@ -107,7 +124,7 @@ export function StatsSection() {
             <span className="text-primary"> Speak Volumes</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            Two decades of excellence have built a foundation of trust, innovation, and measurable success across industries.
+            Over a decade of excellence serving enterprises and individuals with innovative technology solutions across Pune.
           </p>
         </motion.div>
 
@@ -130,6 +147,12 @@ export function StatsSection() {
                   {/* Value */}
                   <div className="mb-2">
                     <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                    {/* Fallback for SSR */}
+                    <noscript>
+                      <span className="text-4xl md:text-5xl font-bold">
+                        {stat.value}{stat.suffix}
+                      </span>
+                    </noscript>
                   </div>
                   
                   {/* Label */}
@@ -162,10 +185,10 @@ export function StatsSection() {
           className="text-center mt-16"
         >
           <p className="text-muted-foreground mb-4">
-            Ready to become part of our success story?
+            Ready to join our growing enterprise community?
           </p>
           <div className="flex items-center justify-center gap-1 text-sm text-primary font-medium">
-            <span>Join 500+ satisfied clients</span>
+            <span>Join 1000+ satisfied enterprise clients</span>
             <motion.span
               animate={{ x: [0, 5, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}

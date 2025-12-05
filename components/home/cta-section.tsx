@@ -20,9 +20,9 @@ export function CTASection() {
           className="text-center"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance">
-            Need tech support or new equipment?
+            Need enterprise IT solutions or tech support?
             <br />
-            We&apos;re here to help!
+            Yog Computers is here to help your business grow!
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="rounded-full px-10">

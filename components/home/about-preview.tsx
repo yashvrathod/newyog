@@ -36,9 +36,9 @@ export function AboutPreview() {
             transition={{ duration: 0.7, delay: 0.2 }}
           >
             <p className="text-lg text-muted-foreground leading-relaxed">
-              At Yog Computers, we specialize in computer sales, repairs, security camera installations, and electrical services. 
-              Our expert team ensures your devices run smoothly with personalized service tailored to your computing needs. 
-              Trust us for fast, reliable, and long-term tech solutions that keep you focused on what truly matters.
+              At Yog Computers, we specialize in enterprise IT solutions, computer sales, repairs, security camera installations, and electrical services. 
+              Our expert team delivers scalable technology solutions for businesses of all sizes, from startups to large enterprises. 
+              Trust us for comprehensive, reliable, and strategic tech partnerships that drive your business forward.
             </p>
           </motion.div>
         </div>

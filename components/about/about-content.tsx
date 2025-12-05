@@ -35,35 +35,35 @@ const milestones = [
     year: "2008",
     title: "Yog Computers Founded",
     description:
-      "Started with a mission to provide reliable technology solutions to Pune's growing business community.",
+      "Started with a mission to provide reliable enterprise technology solutions to Pune's growing business community.",
     icon: Lightbulb,
   },
   {
     year: "2010",
-    title: "CCTV Services Launch",
+    title: "Enterprise CCTV Services",
     description:
-      "Expanded into security camera installation, becoming Pune's trusted security solutions provider.",
+      "Expanded into commercial security camera installation, becoming Pune's trusted enterprise security solutions provider.",
     icon: Camera,
   },
   {
     year: "2015",
-    title: "Electrical Division",
+    title: "Electrical Solutions Division",
     description:
-      "Added comprehensive electrical services, offering complete technology infrastructure solutions.",
+      "Added comprehensive electrical services, offering complete enterprise technology infrastructure solutions.",
     icon: Zap,
   },
   {
-    year: "2018",
-    title: "1000+ Customers",
+    year: "2020",
+    title: "1000+ Enterprise Clients",
     description:
-      "Reached the milestone of serving over 1000 satisfied customers across Pune and surrounding areas.",
+      "Reached the milestone of serving over 1000 satisfied enterprise clients across Pune and surrounding areas.",
     icon: Users,
   },
   {
     year: "2024",
-    title: "Digital Transformation",
+    title: "Digital Enterprise Services",
     description:
-      "Embraced modern web presence and digital customer service while maintaining our personal touch.",
+      "Embraced modern digital enterprise solutions and cloud services while maintaining our personalized business approach.",
     icon: Target,
   },
 ];
@@ -71,47 +71,47 @@ const milestones = [
 const values = [
   {
     icon: CheckCircle,
-    title: "Expertise You Can Trust",
+    title: "Enterprise Expertise",
     description:
-      "With years of hands-on experience, we offer expert solutions for every computing need—from hardware troubleshooting to enterprise-level IT support.",
+      "With years of hands-on experience, we offer expert solutions for every business need—from hardware troubleshooting to enterprise-level IT infrastructure and support.",
   },
   {
     icon: Users,
-    title: "Customer-Centric Approach",
+    title: "Business-Centric Approach",
     description:
-      "Your satisfaction is our top priority. We listen, understand your needs, and provide solutions that deliver real value.",
+      "Your business success is our priority. We listen, understand your enterprise needs, and provide scalable solutions that deliver measurable value.",
   },
   {
     icon: Award,
-    title: "Proven Track Record",
+    title: "Proven Enterprise Track Record",
     description:
-      "Backed by successful installations, satisfied clients, and ongoing support, we stand as a trusted technical partner.",
+      "Backed by successful enterprise installations, satisfied business clients, and ongoing support, we stand as your trusted technology partner.",
   },
   {
     icon: Globe,
-    title: "Transparent Communication",
+    title: "Transparent Business Communication",
     description:
-      "No hidden costs. No complex technical jargon. We clearly explain every step so you always know what you're getting.",
+      "No hidden costs. Clear project timelines. We provide detailed explanations and documentation so your business always knows the implementation plan.",
   },
   {
     icon: Zap,
-    title: "Quality Assurance",
+    title: "Enterprise Quality Assurance",
     description:
-      "We offer only the best products and services—tested, verified, and guaranteed for performance.",
+      "We offer only enterprise-grade products and services—tested, verified, and guaranteed for business-critical performance.",
   },
   {
     icon: Shield,
-    title: "Reliability",
+    title: "Business Reliability",
     description:
-      "Our clients trust us to deliver consistent, dependable results every time.",
+      "Enterprise clients trust us to deliver consistent, dependable results that keep their operations running smoothly.",
   },
 ];
 
 const achievements = [
-  { number: "1000+", label: "Devices Serviced" },
-  { number: "500+", label: "CCTV Installations" },
-  { number: "20+", label: "Years of Excellence" },
-  { number: "99%", label: "Customer Satisfaction" },
+  { number: "1000+", label: "Enterprise Clients" },
+  { number: "500+", label: "Security Installations" },
+  { number: "16+", label: "Years of Excellence" },
+  { number: "99%", label: "Client Satisfaction" },
 ];
 
 export function AboutContent() {
@@ -236,8 +236,8 @@ export function AboutContent() {
               transition={{ duration: 0.8, delay: 1.0 }}
             >
               At Yog Computers, trust is the foundation of everything we do. We
-              understand that your technology needs are essential to your daily
-              life and business operations.
+              understand that your technology needs are essential to your business
+              operations and daily life, from enterprise IT infrastructure to personal computing solutions.
             </motion.p>
 
             <motion.div
@@ -300,7 +300,7 @@ export function AboutContent() {
               Trusted by <span className="text-primary">Thousands</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Over two decades of serving Pune with dedication and excellence
+              Over a decade of serving Pune's enterprises and individuals with dedication and excellence
             </p>
           </motion.div>
 
@@ -368,7 +368,7 @@ export function AboutContent() {
               Two Decades of <span className="text-primary">Innovation</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              From a small computer shop to Pune's trusted technology partner
+              From a small computer shop to Pune's trusted enterprise technology partner
             </p>
           </motion.div>
 
@@ -491,8 +491,8 @@ export function AboutContent() {
               Our <span className="text-primary">Core Values</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              The principles that have guided us for over 20 years and continue
-              to drive our commitment to excellence
+              The principles that have guided us for over 16 years and continue
+              to drive our commitment to enterprise excellence
             </p>
           </motion.div>
 
@@ -567,9 +567,9 @@ export function AboutContent() {
               <span className="text-primary">Difference?</span>
             </h2>
             <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto">
-              Join thousands of satisfied customers who trust Yog Computers for
-              their technology needs. Let us show you what 20+ years of
-              expertise can do for your business.
+              Join thousands of satisfied enterprise clients who trust Yog Computers for
+              their technology needs. Let us show you what 16+ years of
+              expertise can do for your business growth and digital transformation.
             </p>
 
             <motion.div

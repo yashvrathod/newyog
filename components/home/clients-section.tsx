@@ -281,9 +281,9 @@ export function ClientsSection() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
                 {[
                   { number: clients.length + "+", label: "Trusted Clients", icon: Building2 },
-                  { number: "98%", label: "Success Rate", icon: Star },
-                  { number: "24/7", label: "Support", icon: Building2 },
-                  { number: "50+", label: "Countries", icon: Building2 }
+                  { number: "99%", label: "Client Satisfaction", icon: Star },
+                  { number: "24/7", label: "Support Available", icon: Building2 },
+                  { number: "15+", label: "Industries Served", icon: Building2 }
                 ].map((stat, index) => (
                   <motion.div
                     key={index}
