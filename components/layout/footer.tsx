@@ -1,5 +1,12 @@
-import Link from "next/link"
-import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin } from "lucide-react"
+import Link from "next/link";
+import {
+  Instagram,
+  Facebook,
+  Linkedin,
+  Mail,
+  Phone,
+  MapPin,
+} from "lucide-react";
 
 const footerLinks = {
   navigation: [
@@ -20,7 +27,7 @@ const footerLinks = {
     { name: "Facebook", href: "#", icon: Facebook },
     { name: "LinkedIn", href: "#", icon: Linkedin },
   ],
-}
+};
 
 export function Footer() {
   return (
@@ -31,7 +38,10 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-2xl font-bold tracking-tight">Yog Computers</h3>
             <p className="text-background/70 text-sm leading-relaxed">
-              Discover personalized service tailored to your computing needs. Our expert team ensures your devices run smoothly—so you can stay focused on what truly matters. Trust Yog Computers for fast, reliable, and long-term tech solutions.
+              Discover personalized service tailored to your computing needs.
+              Our expert team ensures your devices run smoothly—so you can stay
+              focused on what truly matters. Trust Yog Computers for fast,
+              reliable, and long-term tech solutions.
             </p>
             <div className="flex items-center gap-4 pt-4">
               {footerLinks.social.map((item) => (
@@ -53,7 +63,10 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.navigation.map((item) => (
                 <li key={item.name}>
-                  <Link href={item.href} className="text-background/70 hover:text-background text-sm transition-colors">
+                  <Link
+                    href={item.href}
+                    className="text-background/70 hover:text-background text-sm transition-colors"
+                  >
                     {item.name}
                   </Link>
                 </li>
@@ -67,7 +80,10 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((item) => (
                 <li key={item.name}>
-                  <Link href={item.href} className="text-background/70 hover:text-background text-sm transition-colors">
+                  <Link
+                    href={item.href}
+                    className="text-background/70 hover:text-background text-sm transition-colors"
+                  >
                     {item.name}
                   </Link>
                 </li>
@@ -94,7 +110,7 @@ export function Footer() {
                   <br />
                   Shivshankar Complex, Near R K Hostel
                   <br />
-                  Tanaje Nagar, Mohan Nagar, Dhankawadi
+                  Dhankawadi
                   <br />
                   Pune, Maharashtra 411043
                 </span>
@@ -108,10 +124,12 @@ export function Footer() {
             <p className="text-background/60 text-sm">
               © {new Date().getFullYear()} Yog Computers. All rights reserved.
             </p>
-            <p className="text-background/60 text-sm">Established January 2003</p>
+            <p className="text-background/60 text-sm">
+              Established January 2003
+            </p>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }
