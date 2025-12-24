@@ -12,7 +12,7 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfa
 
 export const metadata: Metadata = {
   title: "Premium Business Solutions | Est. 2003",
-  description: "Leading provider of innovative products and services. Trusted by industry leaders since 2003.",
+  description: "Leading provider of innovative products and services. Trusted by industry leaders since 2008.",
   keywords: ["business solutions", "products", "services", "enterprise"],
   authors: [{ name: "Company Name" }],
   openGraph: {
